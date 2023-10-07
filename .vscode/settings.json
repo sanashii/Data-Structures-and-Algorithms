@@ -1,0 +1,7 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "arrayv1queue.h": "c",
+        "stdbool.h": "c"
+    }
+}
