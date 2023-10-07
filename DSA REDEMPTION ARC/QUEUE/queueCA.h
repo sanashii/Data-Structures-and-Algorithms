@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<stdbool.h>
+#ifndef QUEUE_H
+#define QUEUE_H
 #define MAX 5
 
 // Q.rear == Q.front - 2 means its full (front ahead by 2 cells from rear) we can use a ctr but we're sacrificing a cell here lng
@@ -13,46 +15,12 @@ typedef struct{
     int rear;
 }Queue;
 
-Queue initQueue(Queue Q);
-bool isEmpty(Queue Q);
-bool isFull(Queue Q);
-void enqueue(Queue *Q, int elem);
-void dequeue(Queue *Q);
-int front(Queue Q);
-void display(Queue Q);
-
-int main(){
-    Queue Q = initQueue(Q);
-    enqueue(&Q, 7);
-    enqueue(&Q, 12);
-    enqueue(&Q, 4);
-    enqueue(&Q, 0);
-    printf("Current front: %d\n", front(Q));
-    display(Q);
-    enqueue(&Q, 16);
-    display(Q);
-    enqueue(&Q, 9);
-    dequeue(&Q);
-    dequeue(&Q);
-    display(Q);
-    printf("Current front: %d\n", front(Q));
-    enqueue(&Q, 9);
-    display(Q);
-    dequeue(&Q);
-    display(Q);
-    enqueue(&Q, 1);
-    enqueue(&Q, 5);
-    display(Q);
-    return 0;
-}
-
 Queue initQueue(Queue Q){
     Q.front = -1; 
     Q.rear = -1; 
 
     return Q;
 }
-
 
 bool isEmpty(Queue Q){
     return(Q.rear == Q.front - 1) ? true : false;
@@ -104,3 +72,5 @@ void display(Queue Q) {
 
     printf("\n");
 }
+
+#endif // !QUEUE_H

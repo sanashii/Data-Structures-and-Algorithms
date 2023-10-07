@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
+#ifndef QUEUE_H
+#define QUEUE_H
 
 // O(1) run time for operations
 // AND with doubly linked list, bidirectional traversal is possible
@@ -10,36 +12,6 @@ typedef struct node{
     int data;
     struct node* next;
 }*Queue;
-
-Queue initQueue(Queue Q);
-bool isEmpty(Queue Q);
-void enqueue(Queue *Q, int elem);
-void dequeue(Queue *Q);
-int front(Queue Q);
-void display(Queue Q);
-
-int main(){
-    Queue Q = initQueue(Q);
-    enqueue(&Q, 7);
-    enqueue(&Q, 12);
-    enqueue(&Q, 4);
-    enqueue(&Q, 0);
-    printf("Current front: %d\n", front(Q));
-    display(Q);
-    enqueue(&Q, 16);
-    display(Q);
-    enqueue(&Q, 9);
-    dequeue(&Q);
-    dequeue(&Q);
-    display(Q);
-    printf("Current front: %d\n", front(Q));
-    enqueue(&Q, 5);
-    display(Q);
-    dequeue(&Q);
-    display(Q);
-
-    return 0;
-}
 
 Queue initQueue(Queue Q){
     return Q = NULL;
@@ -87,3 +59,5 @@ void display(Queue Q){
     } while (trav != Q); // the condition require that trav (trav->next) shouldn't be pointing to Q (front) since this is a circular LL
     printf("\n");
 }
+
+#endif // !QUEUE_H

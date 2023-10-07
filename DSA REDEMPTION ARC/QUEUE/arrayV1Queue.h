@@ -1,6 +1,8 @@
 //* regular array within a structure program w/ shifting
 #include <stdio.h>
 #include <stdbool.h>
+#ifndef QUEUE_H
+#define QUEUE_H
 #define MAX 5
 
 typedef struct{
@@ -9,37 +11,6 @@ typedef struct{
     int rear;
 }Queue;
 
-Queue initQueue(Queue Q);
-void shift(int *a, int *b);
-bool isEmpty(Queue Q);
-bool isFull(Queue Q);
-void enqueue(Queue *Q, int elem);
-void dequeue(Queue *Q);
-int front(Queue Q);
-void display(Queue Q);
-
-int main(){
-    Queue Q = initQueue(Q);
-    enqueue(&Q, 7);
-    enqueue(&Q, 12);
-    enqueue(&Q, 4);
-    enqueue(&Q, 0);
-    printf("Current front: %d\n", front(Q));
-    display(Q);
-    enqueue(&Q, 16);
-    display(Q);
-    enqueue(&Q, 9);
-    dequeue(&Q);
-    dequeue(&Q);
-    display(Q);
-    printf("Current front: %d\n", front(Q));
-    enqueue(&Q, 9);
-    display(Q);
-    dequeue(&Q);
-    display(Q);
-
-    return 0;
-}
 
 Queue initQueue(Queue Q){
     Q.front = -1;
@@ -78,6 +49,7 @@ void enqueue(Queue *Q, int elem){
         printf("\nQUEUE IS FULL! Can no longer add elements\n");
     }
 }
+
 void dequeue(Queue *Q){
     if(!isEmpty(*Q)){
         for(int ctr = 0; ctr <= Q->rear; ctr++){
@@ -90,3 +62,5 @@ void dequeue(Queue *Q){
 int front(Queue Q){
     return Q.arr[Q.front];
 }
+
+#endif // !QUEUE_H
