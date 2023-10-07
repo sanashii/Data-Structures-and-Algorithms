@@ -3,8 +3,8 @@
 #include <stdbool.h>
 //#include "arrayV1Queue.h" // Array Implementation V1 (Shifting)
 //#include "arrayV2Queue.h" // Array Implementation V2 (Sol. 2 CA)
-#include "arrayV3Queue.h" // Array Implementation V3 (Sol. 1 ctr variable)
-//#include "arrayV4Queue.h" // Array Implementation V4 (Sol. 2 CA)
+#include "arrayV3Queue.h" // Array Implementation V3 - Fixed Array Size (Sol. 1 CA ctr variable)
+//#include "arrayV4Queue.h" // Array Implementation V4 Dynamic Array
 //#include "queueCA.h" // Circular Array Implementation
 //#include "queueLL.h" // Linked List Implementation (Circular LL)
 //#include "queueCB.h" // Cursor Based Implementation V1 (Circular)
