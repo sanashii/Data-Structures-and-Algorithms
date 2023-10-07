@@ -21,7 +21,9 @@ Queue initQueue(Queue Q){
     return Q;
 }
 
-bool isEmpty(Queue Q);
+bool isEmpty(Queue Q){
+    
+}
 bool isFull(Queue Q);
 void enqueue(Queue *Q, int elem);
 void dequeue(Queue *Q);
