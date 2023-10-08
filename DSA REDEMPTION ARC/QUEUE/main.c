@@ -7,7 +7,7 @@
 //#include "arrayV4Queue.h" // Array Implementation V4 Dynamic Array
 //#include "queueCA.h" // Circular Array Implementation
 //#include "queueLL.h" // Linked List Implementation (Circular LL)
-//#include "queueCB.h" // Cursor Based Implementation V1 (Circular)
+#include "queueCB.h" // Cursor Based Implementation V2
 
 int main(){
     Queue Q = initQueue(Q);
