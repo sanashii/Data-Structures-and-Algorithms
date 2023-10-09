@@ -22,11 +22,11 @@ Queue initQueue(Queue Q){
 }
 
 bool isEmpty(Queue Q){ // using a ctr variable
-    return(Q.ctr == 0) ? true : false;
+    return(Q.ctr == 0 || Q.front == -1 && Q.rear == -1) ? true : false;
 }
 
 bool isFull(Queue Q){
-    return(Q.ctr == MAX - 1) ? true : false;
+    return(Q.ctr == MAX) ? true : false;
 }
 
 void enqueue(Queue *Q, int elem){
@@ -59,25 +59,28 @@ int front(Queue Q){
     return Q.elemptr[Q.front];
 }
 
-void display(Queue Q){
-    // if(!isEmpty(Q)){ //! old code -- works but can be confusing sometimes and too complex
-    //     printf("\nQUEUE:\t");
-    //     int iteration = 0;
-    //     for(int ctr = Q.front; ctr != (Q.rear + 1) % MAX && iteration <= Q.ctr; ctr = (ctr + 1) % MAX, iteration++){
-    //         printf("%d\t", Q.elemptr[ctr]);
-    //     }
-    // }
-    if (!isEmpty(Q)) { //* more readable
+void display(Queue Q){ // FIXME: this method uses traversal and queues can not be traversed
+    if (!isEmpty(Q)) {
         printf("\nQUEUE:\t");
-        int iteration = 0, ctr = Q.front;
-        while (iteration < Q.ctr) {
+        Queue temp = initQueue(temp);
+        int ctr = Q.front;
+        int count = 0;
+
+        while (count < Q.ctr) {
             printf("%d\t", Q.elemptr[ctr]);
+            enqueue(&temp, Q.elemptr[ctr]);
             ctr = (ctr + 1) % MAX;
-            iteration++;
+            count++;
+        }
+
+        // Now, we can restore the original queue by dequeuing from temp
+        while (!isEmpty(temp)) {
+            enqueue(&Q, front(temp));
+            dequeue(&temp);
         }
     }
+
     printf("\n");
 }
-
 
 #endif // !QUEUE_H

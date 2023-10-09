@@ -25,7 +25,7 @@ Queue initQueue(Queue Q){
 }
 
 bool isEmpty(Queue Q){ // using a ctr variable
-    return(Q->ctr == 0) ? true : false;
+    return(Q->ctr == 0 || Q->rear == -1 && Q->front == -1) ? true : false;
 }
 
 bool isFull(Queue Q){ // base it off of ctr not MAX since the array is dynamic and will readjust based on ctr
@@ -50,10 +50,12 @@ void enqueue(Queue *Q, int elem){
 void dequeue(Queue *Q){
     if(!isEmpty(*Q)){
         (*Q)->front++;
+        (*Q)->ctr--;
 
-        if(isEmpty(*Q)){
+        if((*Q)->front >= (*Q)->rear){
             (*Q)->front = -1;
             (*Q)->rear = -1;
+            (*Q)->ctr = 0;
         }
 
         if((*Q)->ctr <= (*Q)->ctr / 2 && (*Q)->ctr > MAX){ // 1st condition checks if the current # of elements is 50% off of the allocated memory
@@ -68,10 +70,16 @@ int front(Queue Q){
 }
 
 void display(Queue Q){
-    int ctr;
     printf("\nQUEUE:\t");
-    for(ctr = Q->front; ctr < Q->ctr; ctr++){
-        printf("%d\t", Q->elemptr[ctr]);
+    Queue temp = initQueue(temp);
+    while(!isEmpty(Q)){
+        printf("%d\t", front(Q));
+        enqueue(&temp, front(Q));
+        dequeue(&Q);
+    }
+    while(!isEmpty(temp)){
+        enqueue(&Q, front(temp)); // Enqueue elements to Q
+        dequeue(&temp);
     }
     printf("\n");
 }

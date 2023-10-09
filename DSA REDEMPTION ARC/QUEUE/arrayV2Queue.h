@@ -23,7 +23,7 @@ Queue initQueue(Queue Q){
 }
 
 bool isEmpty(Queue Q){
-    return(Q->rear == Q->front - 1) ? true : false;
+    return(Q->rear == Q->front - 1 || Q->rear == -1 && Q->front == -1) ? true : false; // checks based on the sol 2 CS and initial sentinel vals
 }
 
 bool isFull(Queue Q){
@@ -61,12 +61,15 @@ int front(Queue Q){
 
 void display(Queue Q){
     printf("\nQUEUE:\t");
-    if(!isEmpty(Q)){
-        int ctr = Q->front;
-        do{
-            printf("%d\t", Q->arr[ctr]);
-            ctr = (ctr + 1) % MAX; //* increments ctr whilst wrapping when necessary
-        }while(ctr != (Q->rear + 1) % MAX); //* while ctr isnt == to the rear whether wrapped or not
+    Queue temp = initQueue(temp);
+    while(!isEmpty(Q)){
+        printf("%d\t", front(Q));
+        enqueue(&temp, front(Q));
+        dequeue(&Q);
+    }
+    while(!isEmpty(temp)){
+        enqueue(&Q, front(temp)); // Enqueue elements to Q
+        dequeue(&temp);
     }
     printf("\n");
 }
