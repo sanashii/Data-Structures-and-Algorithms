@@ -71,14 +71,15 @@ int main(){
     printf("\nA UNION B:\t");
     displaySet(C);
     C = NULL; // setting C back to NULL to reuse it for another operation
-    // C = setIntersection(A, B);
-    // displaySet(C);
-    // C = NULL;
-    // C = setDifference(A, B);
-    // displaySet(C);
-    // C = NULL;
-
-    // printf("\nisSubset(A, B): %d\n", isSubset(A, B));
+    C = setIntersection(A, B);
+    printf("\nA INTERSECTION B:\t");
+    displaySet(C);
+    C = NULL;
+    C = setDifference(A, B);
+    printf("\nA - B:\t");
+    displaySet(C);
+    printf("\nisSubset(A, B): %d", isSubset(A, B)); // false
+    printf("\nisSubset(A, C): %d", isSubset(A, C)); // true
 
     return 0;
 }
@@ -156,6 +157,47 @@ SET setUnion(SET A, SET B){ // return SET C which points to the union set found 
     return C;
 }
 
-SET setIntersection(SET A, SET B); // return SET C which points to the intersection set found in the heap
-SET setDifference(SET A, SET B); // return SET C which points to the set of the set difference of A and B
-bool isSubset(SET A, SET B); // returns TRUE if B is a subset of A
+SET setIntersection(SET A, SET B) { 
+// not efficient but works since it starts with aptr's 1st elem then traverses bptr before moving aptr to the next then traversing bptr again
+    SET C = initSet(C), aptr, bptr, *cptr = &C;
+    for(aptr = A; aptr != NULL; aptr = aptr->link){
+        for(bptr = B; bptr != NULL && bptr->data != aptr->data; bptr = bptr->link){} 
+        //* improved by letting bptr stop if it has found a match & 
+        //* no need for traversing up to the end even if nay match
+        if(bptr != NULL){ 
+            *cptr = (SET)malloc(sizeof(struct cell));
+            (*cptr)->data = aptr->data;
+            (*cptr)->link = NULL;
+            cptr = &(*cptr)->link;
+        }
+    }
+    *cptr = NULL;
+
+    return C;
+}
+
+SET setDifference(SET A, SET B){  // return SET C which points to the set of the set difference of A and B (is in A but not in B)
+    SET C = initSet(C), aptr, bptr, *cptr = &C;
+    for(aptr = A; aptr != NULL; aptr = aptr->link){
+        for(bptr = B; bptr != NULL && bptr->data != aptr->data; bptr = bptr->link){}
+        if(bptr == NULL){
+            *cptr = (SET)malloc(sizeof(struct cell));
+            (*cptr)->data = aptr->data;
+            (*cptr)->link = NULL;
+            cptr = &(*cptr)->link; //! NOTE: remember to make it NULL otherwise the display wont work
+        }
+    }
+    return C;
+}
+
+bool isSubset(SET A, SET B){ // returns TRUE if B is a subset of A
+    bool retVal = true;
+    SET C = initSet(C), aptr, bptr, *cptr = &C;
+    for(bptr = B; bptr != NULL; bptr = bptr->link){
+        for(aptr = A; aptr != NULL && aptr->data != bptr->data; aptr = aptr->link){}
+        if(aptr == NULL){
+            retVal = false;
+        }
+    }
+    return retVal;
+} 

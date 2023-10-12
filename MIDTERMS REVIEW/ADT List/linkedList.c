@@ -17,9 +17,9 @@ void deleteFirst(LIST *L);
 void deleteLast(LIST *L);
 void insertFirst(LIST *L, int value);
 void insertLast(LIST *L, int value);
-void insertAtPos(LIST *L, int loc, int value);
+// void insertAtPos(LIST *L, int loc, int value);
 // insertSorted
-// deleteOccur
+void deleteAllOcurances(LIST *L, int elem);
 // isMember
 
 int main(){
@@ -39,6 +39,7 @@ int main(){
         value += 2;
     }
     printf("\n\nList after inserting elements at the end: ");
+    insertFirst(&L, 14);
     display(L);
 
     printf("\n\n\n----- DELETE FIRST -----");
@@ -62,14 +63,30 @@ int main(){
     deleteLast(&L);
     display(L);
 
-    printf("\n\n\n----- INSERT AT POSITION -----");
-    printf("\nOriginal List: ");
-    display(L);
-    printf("\n\nList after inserting | 14 | at location 5: ");
-    insertAtPos(&L, 5, 14);
+    // printf("\n\n\n----- INSERT AT POSITION -----");
+    // printf("\nOriginal List: ");
+    // display(L);
+    // printf("\n\nList after inserting | 14 | at location 5: ");
+    // insertAtPos(&L, 5, 14);
+    // display(L);
+
+    printf("\n");
+    deleteAllOcurances(&L, 14);
     display(L);
 
     return 0;
+}
+
+void deleteAllOcurances(LIST *L, int elem){
+	LIST *trav, temp;
+	for(trav = L; *trav != NULL; trav = &(*trav)->link){
+		if((*trav)->data == elem){
+			temp = *trav;
+			*trav = temp->link;
+			free(temp);
+		}
+		
+	}
 }
 
 void display(LIST L){
@@ -141,18 +158,18 @@ void deleteLast(LIST *L){
     free(temp); // we free temp / the old last node to make the new last node (*trav) officially the end of the list jd
 }
 
-void insertAtPos(LIST *L, int loc, int value){
-    if (*L == NULL) {
-        *L = temp;
-        return;
-    }
-    if(loc == 1){ // special case if you're inserting at the head
-        insertFirst(L, value);
-        return;
-    }
-    LIST temp = (LIST)malloc(sizeof(struct node)), *trav = L; // again, *trav is pointing to main L
-    temp->data = value;
-    for(int ctr = 0; (*trav)->link != NULL && ctr < loc; ctr++, trav = &(*trav)->link){} //! REMEMBER: &(*trav)->link is basically a pointer to the link variable in a node in main
-    temp->link = *trav;
-    (*trav)->link = temp;
-}
+// void insertAtPos(LIST *L, int loc, int value){
+//     if (*L == NULL) {
+//         *L = temp;
+//         return;
+//     }
+//     if(loc == 1){ // special case if you're inserting at the head
+//         insertFirst(L, value);
+//         return;
+//     }
+//     LIST temp = (LIST)malloc(sizeof(struct node)), *trav = L; // again, *trav is pointing to main L
+//     temp->data = value;
+//     for(int ctr = 0; (*trav)->link != NULL && ctr < loc; ctr++, trav = &(*trav)->link){} //! REMEMBER: &(*trav)->link is basically a pointer to the link variable in a node in main
+//     temp->link = *trav;
+//     (*trav)->link = temp;
+// }
