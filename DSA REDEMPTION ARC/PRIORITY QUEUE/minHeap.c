@@ -27,12 +27,12 @@ int main(){
     insert(&H, 18);
     insert(&H, 7);
 
-    // insert(&H, 6);
+    insert(&H, 2);
 
     display(H);
 
-    printf("\nMinimum: %d\n", deleteMin(&H));
-    display(H);
+    // printf("\nMinimum: %d\n", deleteMin(&H));
+    // display(H);
 
     printf("\n\t-------- HEAP BEFORE HEAPSORT ----------\n");
     display(H);
@@ -59,25 +59,45 @@ void insert(Heap*H, int num){
     }
 }
 
-int deleteMin(Heap *H){
-    int min = -1, ctr, temp;
+// int deleteMin(Heap *H){
+//     int min = -1, ctr, temp;
+//     if(H->lastNdx != -1){
+//         min = H->elem[0];
+//         H->elem[0] = H->elem[H->lastNdx];
+//         H->lastNdx--;
+//         for(ctr = 0; ctr <= H->lastNdx && H->elem[ctr] > H->elem[(ctr * 2) + 1]; ){
+//             int child = (ctr * 2) + 1;
+//             if(H->elem[child + 1] < H->elem[child]){
+//                 child++;
+//             }
+//             temp = H->elem[ctr];
+//             H->elem[ctr] = H->elem[child];
+//             H->elem[child] = temp;
+
+//             ctr = child;
+//         }
+//     }
+//     return min;
+// }
+
+int deleteMin(Heap *H) {
+    int retVal = -1;
     if(H->lastNdx != -1){
-        min = H->elem[0];
+        int min = H->elem[0], parent = 0, LC, RC, SC, temp;
+        retVal = min;
         H->elem[0] = H->elem[H->lastNdx];
         H->lastNdx--;
-        for(ctr = 0; ctr <= H->lastNdx && H->elem[ctr] > H->elem[(ctr * 2) + 1]; ){
-            int child = (ctr * 2) + 1;
-            if(H->elem[child + 1] < H->elem[child]){
-                child++;
-            }
-            temp = H->elem[ctr];
-            H->elem[ctr] = H->elem[child];
-            H->elem[child] = temp;
-
-            ctr = child;
+        for(LC = (parent * 2) + 1, SC = LC; LC <= H->lastNdx && H->elem[parent] >= H->elem[SC]; LC = (parent * 2) + 1){ // SC is initially = LC
+            RC = LC + 1;
+            SC = (RC <= H->lastNdx && H->elem[RC] < H->elem[LC]) ? RC : LC;
+            temp = H->elem[parent];
+            H->elem[parent] = H->elem[SC];
+            H->elem[SC] = temp;
+            parent = SC;
         }
     }
-    return min;
+    
+    return retVal;
 }
 
 void display(Heap H){
@@ -92,7 +112,7 @@ void display(Heap H){
 
 void heapSort(Heap *H){
     int oldLastNdx = H->lastNdx;
-    for( ; H->lastNdx >= 0; H->lastNdx--){
+    while(H->lastNdx >= 0){
         H->elem[H->lastNdx] = deleteMin(H);
     }
     H->lastNdx = oldLastNdx;
