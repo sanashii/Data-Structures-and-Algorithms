@@ -6,8 +6,8 @@
 //#include "arrayV3Queue.h" // Array Implementation V3 - Fixed Array Size (Sol. 1 CA ctr variable)
 //#include "arrayV4Queue.h" // Array Implementation V4 Dynamic Array
 //#include "queueCA.h" // Circular Array Implementation
-#include "queueLL.h" // Linked List Implementation (Circular LL)
-//#include "queueCB.h" // Cursor Based Implementation V2
+//#include "queueLL.h" // Linked List Implementation (Circular LL)
+#include "queueCB.h" // Cursor Based Implementation V2
 
 int main(){
     Queue Q = initQueue(Q);

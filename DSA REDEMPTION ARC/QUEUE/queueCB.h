@@ -51,7 +51,7 @@ void deallocSpace(Queue *Q, int ndx){ // used in dequeue
 }
 
 void enqueue(Queue *Q, int elem){
-    if((*Q)->front == -1){
+    if((*Q)->front == -1){ // if queue is initially empty
         (*Q)->front = allocSpace(*Q); // we give the front a new value of the avail index;
         (*Q)->rear = (*Q)->front;
         (*Q)->node[(*Q)->front].data = elem;
